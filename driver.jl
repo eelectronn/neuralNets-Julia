@@ -1,0 +1,5 @@
+include("Network.jl")
+net = Network([5, 3, 3])
+print(net)
+out = forwardFeed(net, rand(5))
+print(out)
