@@ -18,22 +18,33 @@ function forwardFeed(net::Network, inp::Array)
     return Matrix(transpose(inp))
 end
 
-function getGradient(net::Network, data::Array, expected::Array)
-    expected = Matrix(transpose(expected))
-    activations, zs = [sigmoid.(Matrix(transpose(data)))], [sigmoid.(Matrix(transpose(data)))]
+function getGradient(net::Network, data::Matrix, expected::Matrix)
+    activations, zs = [sigmoid.(data)], [sigmoid.(data)]
     for (weightSet, biasSet) in zip(net.weight, net.bias)
         push!(zs, weightSet*activations[length(activations)]+biasSet)
         push!(activations, sigmoid.(zs[length(zs)]))
     end
     delta = 2*(activations[length(activations)]-expected)
-    delta_w, delta_b = [], []
+    deltaW, deltaB = [], []
     for i = net.numOfLayers:-1:2
-        z_prime = sigmoidPrime.(zs[i])
-        pushfirst!(delta_b, delta.*z_prime)
-        pushfirst!(delta_w, delta_b[1]*Matrix(transpose(activations[i-1])))
-        delta = Matrix(transpose(Matrix(transpose(delta_b[1]))*net.weight[i-1]))
+        zPrime = sigmoidPrime.(zs[i])
+        pushfirst!(deltaB, delta.*zPrime)
+        pushfirst!(deltaW, deltaB[1]*Matrix(transpose(activations[i-1])))
+        delta = Matrix(transpose(Matrix(transpose(deltaB[1]))*net.weight[i-1]))
     end
-    return delta_w, delta_b
+    return deltaW, deltaB
+end
+
+function learn(net::Network, miniBatch, rate)
+    avgDeltaW = [zeros(size(w)) for w in net.weight]
+    avgDeltaB = [zeros(size(b)) for b in net.bias]
+    for example in miniBatch
+        deltaW, deltaB = getGradient(net, example[1], example[2])
+        avgDeltaW = avgDeltaW .+ deltaW
+        avgDeltaB = avgDeltaB .+ deltaB
+    end
+    net.weight = net.weight .- ((rate/length(miniBatch)).*avgDeltaW)
+    net.bias = net.bias .- ((rate/length(miniBatch)).*avgDeltaB)
 end
 
 function sigmoid(num)

@@ -2,11 +2,9 @@ clearconsole()
 include("dataLoader.jl")
 using Plots, Images
 training, testing = loadData()
-training_data = training[1]
-training_label = training[2]
-index = 61
-data = training_data[index]
-label = training_label[index]
+index = 63
+data = training[index][1]
+label = training[index][2]
 println(label)
 data = Matrix(transpose(reshape(data, (28,:))))
 img = colorview(Gray, data)

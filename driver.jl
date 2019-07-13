@@ -1,9 +1,7 @@
 clearconsole()
 include("Network.jl")
 net = Network([5, 3, 2])
-# println(net)
-w,b = getGradient(net, [1 2 3 4 5], [0 1])
-println(w)
-println(typeof(w))
-println(b)
-println(typeof(b))
+println(net)
+println()
+data = [[rand(5,1), rand(2,1)] for i=1:10]
+learn(net, data, 0.5)
