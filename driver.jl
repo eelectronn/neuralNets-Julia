@@ -1,7 +1,8 @@
 clearconsole()
+using Serialization
 include("Network.jl")
-net = Network([5, 3, 2])
-println(net)
-println()
-data = [[rand(5,1), rand(2,1)] for i=1:10]
-learn(net, data, 0.5)
+include("dataLoader.jl")
+training, validation, testing = loadData()
+println("dataLoaded")
+net = Network([784, 30, 10])
+SGD(net, training, validation, 10, 1.0, 20)

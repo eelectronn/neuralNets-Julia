@@ -1,7 +1,7 @@
 clearconsole()
 include("dataLoader.jl")
 using Plots, Images
-training, testing = loadData()
+training, validation, testing = loadData()
 index = 63
 data = training[index][1]
 label = training[index][2]
