@@ -11,4 +11,4 @@ Following examples are produced with Plots and Images package available for Juli
 <img src="images/two.png" width="500">
 
 ## Acknowledgements
-Thanks to [Michael Nielsen](http://michaelnielsen.org) for crafting a wonderful [book on neural networks and deep learning](http://neuralnetworksanddeeplearning.com). It's is great source for someone to start out with neural networks. It covers all the basic of neural nets and more importantly the math that make them work. This book has been following in a great capacity for this project.
+Thanks to [Michael Nielsen](http://michaelnielsen.org) for crafting a wonderful [book on neural networks and deep learning](http://neuralnetworksanddeeplearning.com). It's is great source for someone to start out with neural networks. It covers all the basics about neural nets and more importantly the math that make them work. This book has been followed in a great capacity for this project.
